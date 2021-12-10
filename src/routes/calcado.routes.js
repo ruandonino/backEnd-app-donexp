@@ -1,0 +1,16 @@
+const express = require('express')
+const router = express.Router()
+const calcadoController =   require('../controllers/calcado.controller');
+// Retrieve all employees
+router.get('/', calcadoController.findAll);
+// Create a new employee
+router.post('/', calcadoController.create);
+// Retrieve a single employee with id
+router.get('/:id', calcadoController.findById);
+// Retrieve a single employee with id
+router.get('/shop/:id', calcadoController.findByIdShop);
+// Update a employee with id
+router.put('/:id', calcadoController.update);
+// Delete a employee with id
+router.delete('/:id', calcadoController.delete);
+module.exports = router
