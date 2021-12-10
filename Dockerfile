@@ -10,9 +10,7 @@ RUN apt install unzip
 RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip && \
     unzip instantclient-basiclite-linuxx64.zip && \
     rm -f instantclient-basiclite-linuxx64.zip && \
-    cd instantclient* && \
-    ls && \
-    cp Wallet_donexp/* instantclient*/instantclient*/network/admin
+    cp Wallet_donexp/* instantclient*/network/admin
 RUN npm install
 
 CMD npm start
