@@ -6,7 +6,7 @@ ADD . /app
 
 #RUN install wget unzip libaio && \
 #    rm -rf /var/cache/yum
-RUN sudo apt install unzip
+RUN apt install unzip
 RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip && \
     unzip instantclient-basiclite-linuxx64.zip && \
     rm -f instantclient-basiclite-linuxx64.zip && \
