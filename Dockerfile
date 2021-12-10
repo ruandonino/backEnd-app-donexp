@@ -11,7 +11,9 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantcli
     unzip instantclient-basiclite-linuxx64.zip && \
     rm -f instantclient-basiclite-linuxx64.zip && \
     cp Wallet_donexp/* instantclient*/network/admin
+
+RUN apt-get install oracle-nodejs-release-el7
 RUN npm install
-RUN ls
+
 
 CMD npm start
