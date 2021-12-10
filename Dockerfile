@@ -4,7 +4,7 @@ WORKDIR /app
 
 ADD . /app
 
-RUN rpm install -y wget unzip libaio && \
+RUN install -y wget unzip libaio && \
     rm -rf /var/cache/yum
 RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip && \
     unzip instantclient-basiclite-linuxx64.zip && \
