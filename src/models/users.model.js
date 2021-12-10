@@ -1,7 +1,7 @@
 'use strict';
 const oracledb = require('oracledb');
 
-oracledb.initOracleClient({ libDir: '..\\..\\instantclient-basic-windows.x64-21.3.0.0.0\\instantclient_21_3' });
+oracledb.initOracleClient({ libDir: '..\\..\\instantclient_21_4' });
 // hr schema password
 var password = "231295Don**banco"
 // checkConnection asycn function
