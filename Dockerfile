@@ -4,13 +4,15 @@ WORKDIR /app
 
 ADD . /app
 
-#RUN install wget unzip libaio && \
-#    rm -rf /var/cache/yum
+RUN apt-get install libaio1
+
 RUN apt install unzip
 RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linuxx64.zip && \
     unzip instantclient-basic-linuxx64.zip && \
     rm -f instantclient-basic-linuxx64.zip && \
-    cp Wallet_donexp/* instantclient*/network/admin 
+    cp Wallet_donexp/* instantclient*/network/admin && \
+    sh -c "echo /opt/oracle/instantclient_19_3 > /etc/ld.so.conf.d/oracle-instantclient.conf" && \
+    ldconfig
 
 RUN npm install
 
