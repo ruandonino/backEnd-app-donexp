@@ -3,6 +3,7 @@ FROM node:13
 WORKDIR /app
 
 ADD . /app
+RUN apt-get update
 
 RUN apt-get install libaio1
 
