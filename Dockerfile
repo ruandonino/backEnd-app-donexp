@@ -7,10 +7,10 @@ ADD . /app
 #RUN install wget unzip libaio && \
 #    rm -rf /var/cache/yum
 RUN apt install unzip
-RUN apt-get install libaio
-RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basiclite-linuxx64.zip && \
-    unzip instantclient-basiclite-linuxx64.zip && \
-    rm -f instantclient-basiclite-linuxx64.zip && \
+RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantclient-basic-linuxx64.zip && \
+    unzip instantclient-basic-linuxx64.zip && \
+    rm -f instantclient-basic-linuxx64.zip && \
+    cp Wallet_donexp/* instantclient*/network/admin 
 
 RUN npm install
 
