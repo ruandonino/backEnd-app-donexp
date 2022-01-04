@@ -117,6 +117,8 @@ User.addUserAndShopById = async function (id,newUser, result) {
       }
     }
     else{
+      console.log("Finded");
+      console.log(ret.rows[0]);
       result(null, ret.rows[0]);
     }
   }
