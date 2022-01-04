@@ -1,5 +1,6 @@
 'use strict';
 const oracledb = require('oracledb');
+const Shop = require('./shop.model');
 
 //oracledb.initOracleClient({ libDir: '..\\..\\instantclient_21_4' });
 // hr schema password
@@ -71,6 +72,28 @@ User.findById = async function (id, result) {
   }finally{
     //console.log(ret);
     result(null, ret.rows[0]);
+  }
+};
+
+User.addUserAndShopById = async function (id,newUser, result) {
+  var dbConn = await checkConnection();
+  try{
+    var ret = await dbConn.execute("SELECT * FROM USERS WHERE id = :id ", [id]);
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    //console.log(ret);
+    //result(null, ret.rows[0]);
+    if(length(ret.rows[0])==0){
+      shop_id = Shop.create({'name':newUser.name,'city':'','local_name':''});
+      newUser['id_loja'] = shop_id;
+      result_user = User.create(newUser);
+    }
+    else{
+      result(null, ret.rows[0]);
+    }
   }
 };
 
