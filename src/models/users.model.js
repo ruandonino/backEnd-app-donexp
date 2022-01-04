@@ -88,7 +88,7 @@ User.addUserAndShopById = async function (id,newUser, result) {
     //result(null, ret.rows[0]);
     if(!ret.rows[0]){
       try{
-        var ret_shop_id = await dbConn.execute("INSERT INTO SHOP (NAME,CITY,LOCAL_NAME) VALUES (:1,:2,:3) returning ID into :return_id",{1:newUser.name,2:'',3:'',return_id:{
+        var ret_shop_id = await dbConn.execute("INSERT INTO SHOP (NAME,CITY,LOCAL_NAME) VALUES (:1,:2,:3) returning SHOP_ID into :return_id",{1:newUser.name,2:'',3:'',return_id:{
           dir: oracledb.BIND_OUT,
           type: oracledb.NUMBER
         }},{ autoCommit: true });
