@@ -4,7 +4,7 @@ const userController =   require('../controllers/users.controller');
 // Retrieve all employees
 router.get('/', userController.findAll);
 // Retrieve all employees
-router.post('/', userController.addUserAndShopById);
+router.post('/newUser', userController.addUserAndShopById);
 // Create a new employee
 router.post('/', userController.create);
 // Retrieve a single employee with id
