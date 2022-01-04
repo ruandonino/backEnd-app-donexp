@@ -90,6 +90,7 @@ User.addUserAndShopById = async function (id,newUser, result) {
       shop_id = Shop.create({'name':newUser.name,'city':'','local_name':''});
       newUser['id_loja'] = shop_id;
       result_user = User.create(newUser);
+      result(null, ret.rows[0]);
     }
     else{
       result(null, ret.rows[0]);
