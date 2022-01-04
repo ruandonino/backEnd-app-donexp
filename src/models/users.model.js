@@ -86,14 +86,13 @@ User.addUserAndShopById = async function (id,newUser, result) {
   }finally{
     console.log(ret);
     //result(null, ret.rows[0]);
-    try{
-      if(ret.rows[0].length==0){
-          var ret_shop_id = await dbConn.execute("INSERT INTO SHOP (NAME,CITY,LOCAL_NAME) VALUES (:1,:2,:3) returning ID into :return_id",{1:newUser.name,2:'',3:'',return_id:{
-            dir: oracledb.BIND_OUT,
-            type: oracledb.NUMBER
-          }},{ autoCommit: true });
-        }
-    }
+    if(ret.rows[0]){
+      try{
+        var ret_shop_id = await dbConn.execute("INSERT INTO SHOP (NAME,CITY,LOCAL_NAME) VALUES (:1,:2,:3) returning ID into :return_id",{1:newUser.name,2:'',3:'',return_id:{
+          dir: oracledb.BIND_OUT,
+          type: oracledb.NUMBER
+        }},{ autoCommit: true });
+      }
       catch(err) {
         console.log("error: ", err);
         result(err, null);
