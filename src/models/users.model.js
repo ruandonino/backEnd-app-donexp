@@ -100,15 +100,13 @@ User.addUserAndShopById = async function (id,newUser, result) {
         console.log(ret_shop_id);
         var shop_id = ret_shop_id.outBinds.return_id[0];
         newUser.vetor[3] = shop_id;
+        newUser.vetor[5] = id;
         newUser.vetor['return_id'] = {
           dir: oracledb.BIND_OUT,
           type: oracledb.NUMBER
         }
         try{
-          var ret_user = await dbConn.execute("INSERT INTO USERS (NAME,EMAIL,ID_LOJA,POSITION,ID) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", {1:newUser.name, 2:newUser.email,3:newUser.id_loja, 4:newUser.position,5:id, return_id:{
-            dir: oracledb.BIND_OUT,
-            type: oracledb.NUMBER
-          }},{ autoCommit: true });
+          var ret_user = await dbConn.execute("INSERT INTO USERS (NAME,EMAIL,ID_LOJA,POSITION,ID) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", newUser.vetor,{ autoCommit: true });
         }catch(err){
           console.log("error: ", err);
           result(err, null);
