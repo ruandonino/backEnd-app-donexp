@@ -105,7 +105,10 @@ User.addUserAndShopById = async function (id,newUser, result) {
           type: oracledb.NUMBER
         }
         try{
-          var ret_user = await dbConn.execute("INSERT INTO USERS (NAME,EMAIL,ID_LOJA,POSITION,ID) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", {1:newUser.name, 2:newUser.email,3:newUser.id_loja, 4:newUser.position,5:id},{ autoCommit: true });
+          var ret_user = await dbConn.execute("INSERT INTO USERS (NAME,EMAIL,ID_LOJA,POSITION,ID) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", {1:newUser.name, 2:newUser.email,3:newUser.id_loja, 4:newUser.position,5:id, return_id:{
+            dir: oracledb.BIND_OUT,
+            type: oracledb.NUMBER
+          }},{ autoCommit: true });
         }catch(err){
           console.log("error: ", err);
           result(err, null);
