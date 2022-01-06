@@ -16,11 +16,12 @@ exports.findAll = function(req, res) {
 
 exports.create = function(req, res) {
     const new_user = new User(req.body);
+    const prod = req.body.produto
     //handles null error
     if(req.body.constructor === Object && Object.keys(req.body).length === 0){
         res.status(400).send({ error:true, message: 'Please provide all required field' });
     }else{
-        User.create(new_user, function(err, user) {
+        User.create(new_user,prod, function(err, user) {
             if (err){
                 res.send(err);
             }
