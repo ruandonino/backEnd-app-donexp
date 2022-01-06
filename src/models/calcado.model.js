@@ -44,7 +44,7 @@ var Calcado = function(calcado){
 };
 Calcado.create = async function (newCalcado,result) {
     var dbConn = await checkConnection();
-    console.log(prod)
+    console.log(newCalcado.prod)
     try{
         if(newCalcado.prod == "produto"){
           var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
