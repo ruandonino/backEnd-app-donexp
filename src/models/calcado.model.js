@@ -53,10 +53,12 @@ Calcado.create = async function (newCalcado,result) {
         else{
           var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :3 AND ID_SHOP = :4", newCalcado.produto);
           newCalcado.calcado[7]=id_prod.rows[0][0];
+          console.log("TESTE");
           console.log(id_prod);
         }
         //console.log(ret_produto.outBinds.return_id[0]);
         //console.log(newCalcado.calcado);
+        var ret_calcado = ""
         //var ret_calcado = await dbConn.execute("INSERT INTO CALCADO (DATE_MODEL,SIZE_CAL,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCalcado.calcado,{ autoCommit: true });
     }
     catch(err) {
