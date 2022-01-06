@@ -51,7 +51,7 @@ Calcado.create = async function (newCalcado,result) {
           newCalcado.calcado[7] = ret_produto.outBinds.return_id[0];
         }
         else{
-          var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1", newCalcado.produto);
+          var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1", [newCalcado.produto[1]]);
           newCalcado.calcado[7]=id_prod;
           console.log("TESTE");
           console.log(id_prod);
