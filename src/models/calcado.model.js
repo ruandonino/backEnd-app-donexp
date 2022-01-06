@@ -49,7 +49,7 @@ Calcado.create = async function (newCalcado, prod,result) {
           newCalcado.calcado[7] = ret_produto.outBinds.return_id[0];
         }
         else{
-          newCalcado.calcado[7] = await dbConn.execute("SELECT ID FROM CALCADO WHERE name=:1 AND brand=:3 AND id_shop=:4", newCalcado.produto);
+          newCalcado.calcado[7] = await dbConn.execute("SELECT ID FROM CALCADO WHERE NAME = :1 AND BRAND = :3 AND ID_SHOP = :4", newCalcado.produto);
         }
         //console.log(ret_produto.outBinds.return_id[0]);
         //console.log(newCalcado.calcado);
