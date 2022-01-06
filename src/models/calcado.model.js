@@ -50,6 +50,8 @@ Calcado.create = async function (newCalcado, prod,result) {
         }
         else{
           newCalcado.calcado[7] = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :3 AND ID_SHOP = :4", newCalcado.produto);
+          console.log("find ID");
+          console.log(newCalcado.calcado[7]);
         }
         //console.log(ret_produto.outBinds.return_id[0]);
         //console.log(newCalcado.calcado);
