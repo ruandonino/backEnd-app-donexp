@@ -58,8 +58,8 @@ Calcado.create = async function (newCalcado,result) {
         console.log(data_verify);
       }
     }   
-    if(!data_verify){
-      console.log("entrou");
+    if(data_verify === undefined){
+      console.log("Insert Product");
       try{
         var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
       }catch{
