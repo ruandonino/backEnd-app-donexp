@@ -44,7 +44,7 @@ var Calcado = function(calcado){
 };
 Calcado.create = async function (newCalcado,result) {
     var dbConn = await checkConnection();
-    console.log(newCalcado.prod)
+    console.log(newCalcado)
     try{
         if(newCalcado.prod == "produto"){
           console.log("entrou");
