@@ -52,11 +52,13 @@ Calcado.create = async function (newCalcado,result) {
       console.log("error: ", err);
       result(err, null);
     }finally{
-      data_verify=ret_verify_prod.rows[0][0];
-      console.log("VERIFY");
-      console.log(data_verify);
+      if(ret_verify_prod.rows[0][0]){
+        data_verify=ret_verify_prod.rows[0][0];
+        console.log("VERIFY");
+        console.log(data_verify);
+      }
     }   
-    if(length(data_verify)==0){
+    if(!data_verify){
       console.log("entrou");
       try{
         var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
