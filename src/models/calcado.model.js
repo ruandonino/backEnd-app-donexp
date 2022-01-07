@@ -56,10 +56,12 @@ Calcado.create = async function (newCalcado,result) {
         console.log("VERIFY1");
         console.log(ret_verify_prod.rows.length);
         data_verify=ret_verify_prod.rows[0][0];
-        console.log("VERIFY");
         console.log(data_verify);
       }
-    }   
+    }
+    console.log("valor ID");
+    console.log(data_verify);
+
     if(data_verify === undefined){
       console.log("Insert Product");
       try{
