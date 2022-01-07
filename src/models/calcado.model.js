@@ -52,7 +52,7 @@ Calcado.create = async function (newCalcado,result) {
       console.log("error: ", err);
       result(err, null);
     }finally{
-      if(lenght(ret_verify_prod.rows[0])>0){
+      if(ret_verify_prod.rows[0][0] !== undefined){
         data_verify=ret_verify_prod.rows[0][0];
         console.log("VERIFY");
         console.log(data_verify);
