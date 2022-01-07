@@ -44,7 +44,7 @@ var Calcado = function(calcado){
 };
 Calcado.create = async function (newCalcado,result) {
     var dbConn = await checkConnection();
-    console.log("INIT")
+    console.log("INIT");
     var data_verify;
     try{
         var ret_verify_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
