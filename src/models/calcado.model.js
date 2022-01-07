@@ -54,6 +54,7 @@ Calcado.create = async function (newCalcado,result) {
     }finally{
       if(ret_verify_prod.rows !== undefined){
         console.log("VERIFY1");
+        console.log(ret_verify_prod.rows);
         data_verify=ret_verify_prod.rows[0][0];
         console.log("VERIFY");
         console.log(data_verify);
