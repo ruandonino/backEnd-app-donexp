@@ -45,27 +45,46 @@ var Calcado = function(calcado){
 Calcado.create = async function (newCalcado,result) {
     var dbConn = await checkConnection();
     console.log(newCalcado)
+    var data_verify;
     try{
-        if(newCalcado.prod == "produto"){
-          console.log("entrou");
-          var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
-          newCalcado.calcado[7] = ret_produto.outBinds.return_id[0];
-        }
-        else{
-          try{
-            var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
-          }catch(err){
-            console.log("error: ", err);
-            result(err, null);
-          }finally{
-            newCalcado.calcado[7]=id_prod.rows[0][0];
-            console.log(newCalcado.calcado[7]);
-          }   
-        }
-        //console.log(ret_produto.outBinds.return_id[0]);
-        //console.log(newCalcado.calcado);
-        
-        var ret_calcado = await dbConn.execute("INSERT INTO CALCADO (DATE_MODEL,SIZE_CAL,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCalcado.calcado,{ autoCommit: true });
+        var ret_verify_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
+    }catch(err){
+      console.log("error: ", err);
+      result(err, null);
+    }finally{
+      data_verify=ret_verify_prod.rows[0][0];
+      console.log("VERIFY");
+      console.log(data_verify);
+    }   
+    if(length(data_verify)==0){
+      console.log("entrou");
+      try{
+        var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
+      }catch{
+        console.log("error: ", err);
+      }
+      finally{
+        newCalcado.calcado[7] = ret_produto.outBinds.return_id[0];
+      }
+    }
+    else{
+      /*
+      try{
+        var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
+      }catch(err){
+        console.log("error: ", err);
+        result(err, null);
+      }finally{
+        newCalcado.calcado[7]=id_prod.rows[0][0];
+        console.log(newCalcado.calcado[7]);
+      }
+      */
+      newCalcado.calcado[7]=data_verify; 
+    }
+      //console.log(ret_produto.outBinds.return_id[0]);
+      //console.log(newCalcado.calcado);
+    try{    
+      var ret_calcado = await dbConn.execute("INSERT INTO CALCADO (DATE_MODEL,SIZE_CAL,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCalcado.calcado,{ autoCommit: true });
     }
     catch(err) {
         console.log("error: ", err);
