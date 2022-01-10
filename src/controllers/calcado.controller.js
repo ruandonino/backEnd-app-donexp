@@ -27,7 +27,7 @@ exports.findbyProduct = function(req, res) {
           }
       });
   }
-}
+};
 
 
 exports.create = function(req, res) {
