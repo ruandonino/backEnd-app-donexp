@@ -41,6 +41,68 @@ var Calca = function(calca){
   }};
   this.calca = {1:this.date_model, 2:this.size,3:this.categorie,4:this.material,5:this.color,6:this.gender,7:17}
 };
+
+
+Calca.create = async function (newCalca,result) {
+  var dbConn = await checkConnection();
+  console.log("INIT");
+  var data_verify;
+  try{
+      var ret_verify_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalca.produto[1],2:newCalca.produto[3],3:newCalca.produto[4]});
+  }catch(err){
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    if(ret_verify_prod.rows.length>0){
+      console.log("VERIFY1");
+      console.log(ret_verify_prod.rows.length);
+      data_verify=ret_verify_prod.rows[0][0];
+      console.log(data_verify);
+    }
+  }
+  console.log("valor ID");
+  console.log(data_verify);
+
+  if(data_verify === undefined){
+    console.log("Insert Product");
+    try{
+      var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCalca.produto,{ autoCommit: true });
+    }catch{
+      console.log("error: ", err);
+    }
+    finally{
+      newCalca.calca[7] = ret_produto.outBinds.return_id[0];
+    }
+  }
+  else{
+    /*
+    try{
+      var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
+    }catch(err){
+      console.log("error: ", err);
+      result(err, null);
+    }finally{
+      newCalcado.calcado[7]=id_prod.rows[0][0];
+      console.log(newCalcado.calcado[7]);
+    }
+    */
+    newCalca.calca[7]=data_verify; 
+  }
+    //console.log(ret_produto.outBinds.return_id[0]);
+    //console.log(newCalcado.calcado);
+  try{    
+    var ret_calca = await dbConn.execute("INSERT INTO CALCA (DATE_MODEL,SIZE_CAMISETA,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCalca.calca,{ autoCommit: true });
+  }
+  catch(err) {
+      console.log("error: ", err);
+      result(err, null);
+  }finally{
+      console.log(ret_calca);
+      result(null, ret_calca);
+  }
+};
+
+/*
 Calca.create = async function (newcalca, result) {
     var dbConn = await checkConnection();
     try{
@@ -59,7 +121,7 @@ Calca.create = async function (newcalca, result) {
     }
 };
 
-
+*/
 Calca.delete = async function(id, result){
   var dbConn = await checkConnection();
   try{

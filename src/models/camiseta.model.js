@@ -91,7 +91,7 @@ Camiseta.create = async function (newCamiseta,result) {
     //console.log(ret_produto.outBinds.return_id[0]);
     //console.log(newCalcado.calcado);
   try{    
-    var ret_camiseta = await dbConn.execute("INSERT INTO camiseta (DATE_MODEL,SIZE_CAMISETA,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCamiseta.camiseta,{ autoCommit: true });
+    var ret_camiseta = await dbConn.execute("INSERT INTO CAMISETA (DATE_MODEL,SIZE_CAMISETA,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCamiseta.camiseta,{ autoCommit: true });
   }
   catch(err) {
       console.log("error: ", err);
