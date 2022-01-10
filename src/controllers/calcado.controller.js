@@ -18,7 +18,7 @@ exports.findbyProduct = function(req, res) {
   if(req.body.constructor === Object && Object.keys(req.body).length === 0){
       res.status(400).send({ error:true, message: 'Please provide all required field' });
   }else{
-      Calcado.findByProduct(req.body.idProduct, req.body.tam, req.body.color, function(err, calcado) {
+      Calcado.findByProduct(req.body.idProduct, req.body.tam, req.body.color,req.body.idLoja, function(err, calcado) {
           if (err){
               res.send(err);
           }
