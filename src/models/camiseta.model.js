@@ -41,6 +41,68 @@ var Camiseta = function(camiseta){
   }};
   this.camiseta = {1:this.date_model, 2:this.size,3:this.categorie,4:this.material,5:this.color,6:this.gender,7:17}
 };
+
+
+Camiseta.create = async function (newCamiseta,result) {
+  var dbConn = await checkConnection();
+  console.log("INIT");
+  var data_verify;
+  try{
+      var ret_verify_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCamiseta.produto[1],2:newCamiseta.produto[3],3:newCamiseta.produto[4]});
+  }catch(err){
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    if(ret_verify_prod.rows.length>0){
+      console.log("VERIFY1");
+      console.log(ret_verify_prod.rows.length);
+      data_verify=ret_verify_prod.rows[0][0];
+      console.log(data_verify);
+    }
+  }
+  console.log("valor ID");
+  console.log(data_verify);
+
+  if(data_verify === undefined){
+    console.log("Insert Product");
+    try{
+      var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCamiseta.produto,{ autoCommit: true });
+    }catch{
+      console.log("error: ", err);
+    }
+    finally{
+      newCamiseta.camiseta[7] = ret_produto.outBinds.return_id[0];
+    }
+  }
+  else{
+    /*
+    try{
+      var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
+    }catch(err){
+      console.log("error: ", err);
+      result(err, null);
+    }finally{
+      newCalcado.calcado[7]=id_prod.rows[0][0];
+      console.log(newCalcado.calcado[7]);
+    }
+    */
+    newCamiseta.camiseta[7]=data_verify; 
+  }
+    //console.log(ret_produto.outBinds.return_id[0]);
+    //console.log(newCalcado.calcado);
+  try{    
+    var ret_camiseta = await dbConn.execute("INSERT INTO camiseta (DATE_MODEL,SIZE_CAMISETA,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCamiseta.camiseta,{ autoCommit: true });
+  }
+  catch(err) {
+      console.log("error: ", err);
+      result(err, null);
+  }finally{
+      console.log(ret_camiseta);
+      result(null, ret_camiseta);
+  }
+};
+
+/*
 Camiseta.create = async function (newcamiseta, result) {
     var dbConn = await checkConnection();
     try{
@@ -58,7 +120,7 @@ Camiseta.create = async function (newcamiseta, result) {
         result(null, ret_camiseta);
     }
 };
-
+*/
 
 Camiseta.delete = async function(id, result){
   var dbConn = await checkConnection();
