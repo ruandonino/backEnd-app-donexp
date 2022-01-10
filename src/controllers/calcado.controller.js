@@ -13,6 +13,22 @@ exports.findAll = function(req, res) {
   });
 };
 
+exports.findbyProduct = function(req, res) {
+    //handles null error
+  if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+      res.status(400).send({ error:true, message: 'Please provide all required field' });
+  }else{
+      Calcado.findByProduct(req.body.idProduct, req.body.tam, req.body.color, function(err, calcado) {
+          if (err){
+              res.send(err);
+          }
+          else{
+          res.json({error:false,message:"Id calcado",data:calcado});
+          }
+      });
+  }
+}
+
 
 exports.create = function(req, res) {
     const new_calcado = new Calcado(req.body);

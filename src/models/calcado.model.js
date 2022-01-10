@@ -132,6 +132,20 @@ Calcado.findById = async function (id, result) {
   }
 };
 
+Calcado.findByProduct = async function (idProduct, tam, color, result) {
+  var dbConn = await checkConnection();
+  try{
+    var ret = await dbConn.execute("SELECT ID FROM CALCADO INNER JOIN PRODUTO ON CALCADO.ID_PRODUTO = PRODUTO.ID WHERE PRODUTO.ID = :1 AND CALCADO.SIZE_CAL = :2 AND CALCADO.COLOR = :3", {1:idProduct,2:tam,3:color});
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    console.log(ret);
+    result(null, ret.rows[0]);
+  }
+};
+
 Calcado.findByIdShop = async function (id, result) {
   var dbConn = await checkConnection();
   try{
