@@ -91,7 +91,7 @@ Calca.create = async function (newCalca,result) {
     //console.log(ret_produto.outBinds.return_id[0]);
     //console.log(newCalcado.calcado);
   try{    
-    var ret_calca = await dbConn.execute("INSERT INTO CALCA (DATE_MODEL,SIZE_CAMISETA,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCalca.calca,{ autoCommit: true });
+    var ret_calca = await dbConn.execute("INSERT INTO CALCA (DATE_MODEL,SIZE_CALCA,CATEGORIE,MATERIAL,COLOR,GENDER,ID_PRODUTO) VALUES (:1,:2,:3,:4,:5,:6,:7)", newCalca.calca,{ autoCommit: true });
   }
   catch(err) {
       console.log("error: ", err);
