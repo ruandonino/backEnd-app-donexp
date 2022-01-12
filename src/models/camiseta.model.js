@@ -177,7 +177,7 @@ Camiseta.findByProduct = async function (idProduct,client_id,date,shop_id, tam, 
     //console.log(ret_produto.outBinds.return_id[0]);
     //console.log(newCalcado.calcado);
   try{    
-    var ret_item_order = await dbConn.execute("INSERT INTO ITEM_ORDER (ID_ORDER,ID_PRODUTO,QUANT,ID_ITEM,CATEGORY) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id",{1:id_order,2:idProduct,3:quant,4:id_item,5:"CALCADO",return_id:{
+    var ret_item_order = await dbConn.execute("INSERT INTO ITEM_ORDER (ID_ORDER,ID_PRODUTO,QUANT,ID_ITEM,CATEGORY) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id",{1:id_order,2:idProduct,3:quant,4:id_item,5:"CAMISETA",return_id:{
       dir: oracledb.BIND_OUT,
       type: oracledb.NUMBER
     }},{ autoCommit: true });
