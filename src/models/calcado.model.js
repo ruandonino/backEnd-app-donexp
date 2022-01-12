@@ -136,6 +136,7 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
   console.log(idProduct);
   console.log(tam);
   console.log(color);
+  var data_verify;
   try{
     var ret = await dbConn.execute("SELECT ID FROM CALCADO WHERE CALCADO.ID_PRODUTO = :1 AND CALCADO.SIZE_CAL = :2 AND CALCADO.COLOR = :3", {1:idProduct,2:tam,3:color});
   }
@@ -144,7 +145,7 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
     result(err, null);
   }finally{
     console.log(ret);
-    id_item = ret.rows[0][0];
+    var id_item = ret.rows[0][0];
     //result(null, ret.rows[0][0]);
     try{
       var ret_verify_order = await dbConn.execute("SELECT ID FROM ORDER_ WHERE CLIENT_ID=:1 AND DATE_=:2 AND SHOP_ID=:3",{1:client_id,2:date,3:shop_id});
@@ -173,17 +174,6 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
     }
   }
   else{
-    /*
-    try{
-      var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
-    }catch(err){
-      console.log("error: ", err);
-      result(err, null);
-    }finally{
-      newCalcado.calcado[7]=id_prod.rows[0][0];
-      console.log(newCalcado.calcado[7]);
-    }
-    */
     id_order=data_verify; 
   }
     //console.log(ret_produto.outBinds.return_id[0]);
