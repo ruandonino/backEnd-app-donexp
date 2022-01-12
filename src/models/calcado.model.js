@@ -148,7 +148,7 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
     var id_item = ret.rows[0][0];
     //result(null, ret.rows[0][0]);
     try{
-      var ret_verify_order = await dbConn.execute("SELECT ID FROM ORDER_ WHERE CLIENT_ID=:1 AND DATE_=:2 AND SHOP_ID=:3",{1:client_id,2:date,3:shop_id});
+      var ret_verify_order = await dbConn.execute("SELECT ID FROM ORDER_ WHERE CLIENT_ID=:1 AND DATE_=:2 AND ID_SHOP=:3",{1:client_id,2:date,3:shop_id});
     }catch(err){
       console.log("error: ", err);
       result(err, null);
