@@ -136,6 +136,8 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
   console.log(idProduct);
   console.log(tam);
   console.log(color);
+  console.log(date);
+  console.log(shop_id);
   var data_verify;
   try{
     var ret = await dbConn.execute("SELECT ID FROM CALCADO WHERE CALCADO.ID_PRODUTO = :1 AND CALCADO.SIZE_CAL = :2 AND CALCADO.COLOR = :3", {1:idProduct,2:tam,3:color});
