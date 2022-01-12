@@ -1,6 +1,5 @@
 'use strict';
 const oracledb = require('oracledb');
-
 //oracledb.initOraclecalcado({ libDir: 'C:\\Users\\Donruan\\Documents\\Projeto Smarex\\back-end-AI\\instantcalcado-basic-windows.x64-21.3.0.0.0\\instantcalcado_21_3' });
 // hr schema password
 var password = "231295Don**banco"
@@ -132,7 +131,7 @@ Calcado.findById = async function (id, result) {
   }
 };
 
-Calcado.findByProduct = async function (idProduct, tam, color, result) {
+Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, color,quant, result) {
   var dbConn = await checkConnection();
   console.log(idProduct);
   console.log(tam);
@@ -145,8 +144,61 @@ Calcado.findByProduct = async function (idProduct, tam, color, result) {
     result(err, null);
   }finally{
     console.log(ret);
-    result(null, ret.rows[0][0]);
+    id_item = ret.rows[0][0];
+    //result(null, ret.rows[0][0]);
+    try{
+      var ret_verify_order = await dbConn.execute("SELECT ID FROM ORDER_ WHERE CLIENT_ID=:1 AND DATE_=:2 AND SHOP_ID=:3",{1:client_id,2:date,3:shop_id});
+    }catch(err){
+      console.log("error: ", err);
+      result(err, null);
+    }finally{
+      if(ret_verify_order.rows.length>0){
+        data_verify=ret_verify_order.rows[0][0];
+      }
+    }
   }
+  console.log("valor ID");
+  console.log(data_verify);
+
+  if(data_verify === undefined){
+    console.log("Insert Order");
+    try{
+      var prod = await dbConn.execute("SELECT PRICE FROM PRODUCT WHERE ID = :1",{1:idProduct});
+      var ret_insert_order = await dbConn.execute("INSERT INTO ORDER_ (CLIENT_ID,DATE_,TOTAL_VALUE,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", {1:client_id,2:date,3:prod.rows[0][0]},{ autoCommit: true })
+    }catch{
+      console.log("error: ", err);
+    }
+    finally{
+      id_order = ret_insert_order.outBinds.return_id[0];
+    }
+  }
+  else{
+    /*
+    try{
+      var id_prod = await dbConn.execute("SELECT ID FROM PRODUTO WHERE NAME = :1 AND BRAND = :2 AND ID_SHOP = :3", {1:newCalcado.produto[1],2:newCalcado.produto[3],3:newCalcado.produto[4]});
+    }catch(err){
+      console.log("error: ", err);
+      result(err, null);
+    }finally{
+      newCalcado.calcado[7]=id_prod.rows[0][0];
+      console.log(newCalcado.calcado[7]);
+    }
+    */
+    id_order=data_verify; 
+  }
+    //console.log(ret_produto.outBinds.return_id[0]);
+    //console.log(newCalcado.calcado);
+  try{    
+    var ret_item_order = await dbConn.execute("INSERT INTO ITEM_ORDER (ID_ORDER,ID_PRODUTO,QUANT,ID_ITEM,CATEGORY) VALUES (:1,:2,:3,:4,:5)",{1:id_order,2:id_produto,3:quant,4:id_item,5:"CALCADO"},{ autoCommit: true });
+  }
+  catch(err) {
+      console.log("error: ", err);
+      result(err, null);
+  }finally{
+      console.log(ret_item_order);
+      result(null, ret_item_order);
+  }
+
 };
 
 Calcado.findByIdShop = async function (id, result) {
