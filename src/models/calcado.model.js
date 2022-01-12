@@ -170,7 +170,7 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
       var prod = await dbConn.execute("SELECT PRICE FROM PRODUTO WHERE ID = :1",{1:idProduct});
       console.log("Prod data");
       console.log(prod.rows);
-      var ret_insert_order = await dbConn.execute("INSERT INTO ORDER_ (CLIENT_ID,DATE_,TOTAL_VALUE,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", {1:client_id,2:date,3:prod.rows[0][0],4:shop_id,return_id:{
+      var ret_insert_order = await dbConn.execute("INSERT INTO ORDER_ (CLIENT_ID,DATE_,TOTAL_VALUE,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", {1:Number(client_id),2:date,3:Number(prod.rows[0][0]),4:Number(shop_id),return_id:{
         dir: oracledb.BIND_OUT,
         type: oracledb.NUMBER
       }},{ autoCommit: true });
