@@ -5,6 +5,8 @@ const camisetaController =   require('../controllers/camiseta.controller');
 router.get('/', camisetaController.findAll);
 // Create a new employee
 router.post('/', camisetaController.create);
+// Update a employee with id
+router.post('/product', camisetaController.findbyProduct);
 // Retrieve a single employee with id
 router.get('/:id', camisetaController.findById);
 // Retrieve a single employee with id

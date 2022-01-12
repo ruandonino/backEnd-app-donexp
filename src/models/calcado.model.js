@@ -196,7 +196,7 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
       result(err, null);
   }finally{
       console.log(ret_item_order);
-      result(null, ret_item_order);
+      result(null, ret_item_order.outBinds.return_id[0]);
   }
 
 };

@@ -5,6 +5,8 @@ const calcaController =   require('../controllers/calca.controller');
 router.get('/', calcaController.findAll);
 // Create a new employee
 router.post('/', calcaController.create);
+// Update a employee with id
+router.post('/product', calcaController.findbyProduct);
 // Retrieve a single employee with id
 router.get('/:id', calcaController.findById);
 // Retrieve a single employee with id

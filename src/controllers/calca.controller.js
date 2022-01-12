@@ -31,6 +31,22 @@ exports.create = function(req, res) {
     }
 };
 
+exports.findbyProduct = function(req, res) {
+  //handles null error
+if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+    res.status(400).send({ error:true, message: 'Please provide all required field' });
+}else{
+    Calca.findByProduct(req.body.idProduct,req.body.client_id, req.body.date, req.body.shop_id, req.body.tam, req.body.color,req.body.quant, function(err, calca) {
+        if (err){
+            res.send(err);
+        }
+        else{
+        res.json({error:false,message:"data item inserted",data:calca});
+        }
+    });
+}
+};
+
 exports.delete = function(req, res) {
   Calca.delete( req.params.id, function(err, calca) {
     if (err)

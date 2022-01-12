@@ -122,6 +122,77 @@ Calca.create = async function (newcalca, result) {
 };
 
 */
+
+Calca.findByProduct = async function (idProduct,client_id,date,shop_id, tam, color,quant, result) {
+  var dbConn = await checkConnection();
+  console.log(idProduct);
+  console.log(client_id);
+  console.log(tam);
+  console.log(color);
+  console.log(date);
+  console.log(shop_id);
+  var data_verify;
+  var id_order;
+  try{
+    var ret = await dbConn.execute("SELECT ID FROM CALCA WHERE CALCA.ID_PRODUTO = :1 AND CALCA.SIZE_CALCA = :2 AND CALCA.COLOR = :3", {1:idProduct,2:tam,3:color});
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    console.log(ret);
+    var id_item = ret.rows[0][0];
+    //result(null, ret.rows[0][0]);
+    try{
+      var ret_verify_order = await dbConn.execute("SELECT ID FROM ORDER_ WHERE CLIENT_ID=:1 AND DATE_=:2 AND ID_SHOP=:3",{1:client_id,2:date,3:shop_id});
+    }catch(err){
+      console.log("error: ", err);
+      result(err, null);
+    }finally{
+      if(ret_verify_order.rows.length>0){
+        data_verify=ret_verify_order.rows[0][0];
+      }
+    }
+  }
+  console.log("valor ID");
+  console.log(data_verify);
+
+  if(data_verify === undefined){
+    console.log("Insert Order");
+    try{
+      var prod = await dbConn.execute("SELECT PRICE FROM PRODUTO WHERE ID = :1",{1:idProduct});
+      console.log("Prod data");
+      console.log(prod.rows);
+      var ret_insert_order = await dbConn.execute("INSERT INTO ORDER_ (CLIENT_ID,DATE_,TOTAL_VALUE,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", {1:client_id,2:date,3:prod.rows[0][0],4:shop_id,return_id:{dir: oracledb.BIND_OUT,type: oracledb.NUMBER}},{ autoCommit: true });
+    }catch(err){
+      console.log("error: ", err);
+    }
+    finally{
+      //console.log("LOG Insert: ", ret_insert_order);
+      id_order = ret_insert_order.outBinds.return_id[0];
+    }
+  }
+  else{
+    id_order=data_verify; 
+  }
+    //console.log(ret_produto.outBinds.return_id[0]);
+    //console.log(newCalcado.calcado);
+  try{    
+    var ret_item_order = await dbConn.execute("INSERT INTO ITEM_ORDER (ID_ORDER,ID_PRODUTO,QUANT,ID_ITEM,CATEGORY) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id",{1:id_order,2:idProduct,3:quant,4:id_item,5:"CALCADO",return_id:{
+      dir: oracledb.BIND_OUT,
+      type: oracledb.NUMBER
+    }},{ autoCommit: true });
+  }
+  catch(err) {
+      console.log("error: ", err);
+      result(err, null);
+  }finally{
+      console.log(ret_item_order);
+      result(null, ret_item_order.outBinds.return_id[0]);
+  }
+
+};
+
 Calca.delete = async function(id, result){
   var dbConn = await checkConnection();
   try{
