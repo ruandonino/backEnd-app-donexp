@@ -171,7 +171,7 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
       console.log("Prod data");
       console.log(prod.rows);
       var ret_insert_order = await dbConn.execute("INSERT INTO ORDER_ (CLIENT_ID,DATE_,TOTAL_VALUE,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", {1:Number(client_id),2:date,3:Number(prod.rows[0][0]),4:Number(shop_id),return_id:{dir: oracledb.BIND_OUT,type: oracledb.NUMBER}},{ autoCommit: true });
-    }catch{
+    }catch(err){
       console.log("error: ", err);
     }
     finally{
