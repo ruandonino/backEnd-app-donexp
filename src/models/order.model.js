@@ -146,7 +146,7 @@ Order.listOrderByIdShop = async function (id, result) {
   var dbConn = await checkConnection();
   //var categories_prod = ['CALCADO','CALCA','CAMISETA'];
   try{
-    var ret = await dbConn.execute("SELECT * FROM ORDER_ WHERE ID_SHOP = :id", [id]);
+    var ret = await dbConn.execute("SELECT * FROM ORDER_ INNER JOIN CLIENT ON ORDER_.CLIENT_ID = CLIENT.ID WHERE ID_SHOP = :id", [id]);
     console.log(ret);
   }
   catch(err) {
@@ -161,7 +161,7 @@ Order.listOrderByIdShop = async function (id, result) {
 Order.findAll = async function (result) {
   var dbConn = await checkConnection();
   try{
-    var ret = await dbConn.execute("SELECT * FROM ORDER_ INNER JOIN ITEM_ORDER ON ORDER.ID = ITEM_ORDER.ID_ORDER JOIN PRODUTO ON PRODUTO.ID = ITEM_ORDER.ID_PRODUTO JOIN CALCADO ON PRODUTO.ID = CALCADO.ID_PRODUTO JOIN CALCA ON PRODUTO.ID = CALCA.ID_PRODUTO JOIN CAMISETA ON PRODUTO.ID = CAMISETA.ID_PRODUTO");
+    var ret = await dbConn.execute("SELECT * FROM ORDER_ INNER JOIN ITEM_ORDER ON ORDER_.ID = ITEM_ORDER.ID_ORDER JOIN PRODUTO ON PRODUTO.ID = ITEM_ORDER.ID_PRODUTO JOIN CALCADO ON PRODUTO.ID = CALCADO.ID_PRODUTO JOIN CALCA ON PRODUTO.ID = CALCA.ID_PRODUTO JOIN CAMISETA ON PRODUTO.ID = CAMISETA.ID_PRODUTO");
   }
   catch(err) {
     console.log("error: ", err);
