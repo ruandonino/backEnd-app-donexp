@@ -142,6 +142,22 @@ Order.findByIdShop = async function (id, result) {
   }
 };
 
+Order.listOrderByIdShop = async function (id, result) {
+  var dbConn = await checkConnection();
+  //var categories_prod = ['CALCADO','CALCA','CAMISETA'];
+  try{
+    var ret = await dbConn.execute("SELECT * FROM ORDER_ WHERE ID_SHOP = :id", [id]);
+    console.log(ret);
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    //console.log(ret);
+    result(null, ret.rows);
+  }
+};
+
 Order.findAll = async function (result) {
   var dbConn = await checkConnection();
   try{
