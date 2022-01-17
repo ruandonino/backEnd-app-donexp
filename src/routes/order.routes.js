@@ -10,7 +10,7 @@ router.get('/:id', orderController.findById);
 // Retrieve a single employee with id
 router.get('/shop/:id', orderController.findByIdShop);
 // Retrieve a single employee with id
-router.get('/shop/list/:id', orderController.listOrderByIdShop);
+router.get('/list/:id', orderController.listOrderByIdShop);
 // Update a employee with id
 router.put('/:id', orderController.update);
 // Delete a employee with id
