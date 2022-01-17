@@ -87,7 +87,7 @@ Client.findByIdShop = async function (id, result) {
     result(err, null);
   }finally{
     //console.log(ret);
-    result(null, ret.rows[0]);
+    result(null, ret.rows);
   }
 };
 
