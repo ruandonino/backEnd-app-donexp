@@ -51,7 +51,7 @@ exports.findByIdShop = function(req, res) {
   Client.findByIdShop(req.params.id, function(err, client) {
   if (err)
   res.send(err);
-  res.json(client);
+  res.send(client);
   });
 };
 
