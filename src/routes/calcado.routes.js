@@ -10,7 +10,7 @@ router.get('/:id', calcadoController.findById);
 // Retrieve a single employee with id
 router.get('/shop/:id', calcadoController.findByIdShop);
 // Retrieve a single employee with id
-router.get('/product/shop/:id', calcadoController.listProductByIdShop);
+router.get('/product/shop/:id', calcadoController.allProductByIdShop);
 // Update a employee with id
 router.put('/:id', calcadoController.update);
 // Update a employee with id
