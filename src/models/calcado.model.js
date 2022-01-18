@@ -216,6 +216,21 @@ Calcado.findByIdShop = async function (id, result) {
   }
 };
 
+Calcado.allProductByIdShop = async function (id, result) {
+  var dbConn = await checkConnection();
+  try{
+    var ret = await dbConn.execute("SELECT * FROM PRODUTO WHERE ID_SHOP = :id", [id]);
+    console.log(ret);
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    //console.log(ret);
+    result(null, ret.rows);
+  }
+};
+
 Calcado.findAll = async function (result) {
   var dbConn = await checkConnection();
   try{

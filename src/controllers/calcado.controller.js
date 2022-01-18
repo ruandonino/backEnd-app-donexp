@@ -30,6 +30,8 @@ exports.findbyProduct = function(req, res) {
 };
 
 
+
+
 exports.create = function(req, res) {
     const new_calcado = new Calcado(req.body);
     //handles null error
@@ -65,6 +67,14 @@ exports.findById = function(req, res) {
 
 exports.findByIdShop = function(req, res) {
   Calcado.findByIdShop(req.params.id, function(err, calcado) {
+  if (err)
+  res.send(err);
+  res.json(calcado);
+  });
+};
+
+exports.listProductByIdShop = function(req, res) {
+  Calcado.listProductByIdShop(req.params.id, function(err, calcado) {
   if (err)
   res.send(err);
   res.json(calcado);
