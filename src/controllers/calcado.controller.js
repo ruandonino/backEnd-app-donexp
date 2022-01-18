@@ -73,7 +73,7 @@ exports.findByIdShop = function(req, res) {
   });
 };
 
-exports.listProductByIdShop = function(req, res) {
+exports.allProductByIdShop = function(req, res) {
   Calcado.listProductByIdShop(req.params.id, function(err, calcado) {
   if (err)
   res.send(err);
