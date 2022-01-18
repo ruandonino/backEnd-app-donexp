@@ -74,7 +74,7 @@ exports.findByIdShop = function(req, res) {
 };
 
 exports.allProductByIdShop = function(req, res) {
-  Calcado.listProductByIdShop(req.params.id, function(err, calcado) {
+  Calcado.allProductByIdShop(req.params.id, function(err, calcado) {
   if (err)
   res.send(err);
   res.json(calcado);
