@@ -206,8 +206,8 @@ Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_i
   var dbConn = await checkConnection();
   console.log(idProduct);
   console.log(client_id);
-  console.log(tam);
-  console.log(color);
+  //console.log(tam);
+  //console.log(color);
   console.log(date);
   console.log(shop_id);
   var data_verify;
