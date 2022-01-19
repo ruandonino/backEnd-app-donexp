@@ -15,6 +15,8 @@ router.get('/product/shop/:id', calcadoController.allProductByIdShop);
 router.put('/:id', calcadoController.update);
 // Update a employee with id
 router.post('/product', calcadoController.findbyProduct);
+// Update a employee with id
+router.post('/findproducts', calcadoController.findProducts);
 // Delete a employee with id
 router.delete('/:id', calcadoController.delete);
 module.exports = router

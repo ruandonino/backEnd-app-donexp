@@ -201,6 +201,21 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
 
 };
 
+
+Calcado.findProducts = async function (idProduct, result) {
+  var dbConn = await checkConnection();
+  console.log(idProduct);
+  try{
+    var ret = await dbConn.execute("SELECT * FROM CALCADO WHERE CALCADO.ID_PRODUTO = :1", {1:idProduct});
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    result(null, ret.rows);
+  }
+};
+
 Calcado.findByIdShop = async function (id, result) {
   var dbConn = await checkConnection();
   try{
