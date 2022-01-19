@@ -202,7 +202,7 @@ Calcado.findByProduct = async function (idProduct,client_id,date,shop_id, tam, c
 };
 
 
-Calcado.itemToOrder = async function (idProduct,idItem,client_id,date,shop_id, quant, result) {
+Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_id, quant, result) {
   var dbConn = await checkConnection();
   console.log(idProduct);
   console.log(client_id);
