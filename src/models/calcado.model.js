@@ -299,7 +299,7 @@ Calcado.findProducts = async function (idProduct, result) {
 Calcado.findByIdShop = async function (id, result) {
   var dbConn = await checkConnection();
   try{
-    var ret = await dbConn.execute("SELECT Produto.* FROM CALCADO INNER JOIN PRODUTO ON CALCADO.ID_PRODUTO = PRODUTO.ID JOIN SHOP ON PRODUTO.ID_SHOP = SHOP.SHOP_ID WHERE SHOP.SHOP_ID = :id", [id]);
+    var ret = await dbConn.execute("SELECT PRODUTO.* FROM CALCADO INNER JOIN PRODUTO ON CALCADO.ID_PRODUTO = PRODUTO.ID JOIN SHOP ON PRODUTO.ID_SHOP = SHOP.SHOP_ID WHERE SHOP.SHOP_ID = :id", [id]);
     console.log(ret);
   }
   catch(err) {
