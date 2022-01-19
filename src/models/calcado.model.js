@@ -253,7 +253,7 @@ Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_i
       var prod = await dbConn.execute("SELECT PRICE FROM PRODUTO WHERE ID = :1",{1:idProduct});
       //console.log("Prod data");
       //console.log(prod.rows);
-      var ret_update_order = await dbConn.execute("UPDATE ORDER_ SET TOTAL_VALUE=:1", {1:prod.rows[0][0]*quant+order_value},{ autoCommit: true });
+      var ret_update_order = await dbConn.execute("UPDATE ORDER_ SET TOTAL_VALUE=:1 WHERE ID=:2", {1:prod.rows[0][0]*quant+order_value,2:id_order},{ autoCommit: true });
     }catch(err){
       console.log("error: ", err);
     }
