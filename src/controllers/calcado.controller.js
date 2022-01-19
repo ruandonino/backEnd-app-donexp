@@ -29,6 +29,22 @@ exports.findbyProduct = function(req, res) {
   }
 };
 
+exports.itemToOrder = function(req, res) {
+  //handles null error
+if(req.body.constructor === Object && Object.keys(req.body).length === 0){
+    res.status(400).send({ error:true, message: 'Please provide all required field' });
+}else{
+    Calcado.itemToOrder(req.body.idProduct,req.body.client_id, req.body.date, req.body.shop_id, req.body.tam, req.body.color,req.body.quant, function(err, calcado) {
+        if (err){
+            res.send(err);
+        }
+        else{
+        res.json({error:false,message:"data item inserted",data:calcado});
+        }
+    });
+}
+};
+
 exports.findProducts = function(req, res) {
   //handles null error
 if(req.body.constructor === Object && Object.keys(req.body).length === 0){
