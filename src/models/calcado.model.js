@@ -212,17 +212,19 @@ Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_i
   console.log(shop_id);
   var data_verify;
   var id_order;
+  var order_value;
   
   var id_item = idItem;
   //result(null, ret.rows[0][0]);
   try{
-    var ret_verify_order = await dbConn.execute("SELECT ID FROM ORDER_ WHERE CLIENT_ID=:1 AND DATE_=:2 AND ID_SHOP=:3",{1:client_id,2:date,3:shop_id});
+    var ret_verify_order = await dbConn.execute("SELECT ID,TOTAL_VALUE FROM ORDER_ WHERE CLIENT_ID=:1 AND DATE_=:2 AND ID_SHOP=:3",{1:client_id,2:date,3:shop_id});
   }catch(err){
     console.log("error: ", err);
     result(err, null);
   }finally{
     if(ret_verify_order.rows.length>0){
-      data_verify=ret_verify_order.rows[0][0];
+      data_verify=ret_verify_order.rows[0][0][0];
+      order_value=ret_verify_order.rows[0][0][1];
     }
   }
   
@@ -234,8 +236,8 @@ Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_i
     try{
       var prod = await dbConn.execute("SELECT PRICE FROM PRODUTO WHERE ID = :1",{1:idProduct});
       console.log("Prod data");
-      console.log(prod.rows);
-      var ret_insert_order = await dbConn.execute("INSERT INTO ORDER_ (CLIENT_ID,DATE_,TOTAL_VALUE,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", {1:client_id,2:date,3:prod.rows[0][0],4:shop_id,return_id:{dir: oracledb.BIND_OUT,type: oracledb.NUMBER}},{ autoCommit: true });
+      //console.log(prod.rows);
+      var ret_insert_order = await dbConn.execute("INSERT INTO ORDER_ (CLIENT_ID,DATE_,TOTAL_VALUE,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", {1:client_id,2:date,3:prod.rows[0][0]*quant,4:shop_id,return_id:{dir: oracledb.BIND_OUT,type: oracledb.NUMBER}},{ autoCommit: true });
     }catch(err){
       console.log("error: ", err);
     }
@@ -245,7 +247,19 @@ Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_i
     }
   }
   else{
-    id_order=data_verify; 
+    id_order=data_verify;
+    try{
+      var prod = await dbConn.execute("SELECT PRICE FROM PRODUTO WHERE ID = :1",{1:idProduct});
+      //console.log("Prod data");
+      //console.log(prod.rows);
+      var ret_update_order = await dbConn.execute("UPDATE ORDER_ SET TOTAL_VALUE=:1", {1:prod.rows[0][0]*quant+order_value},{ autoCommit: true });
+    }catch(err){
+      console.log("error: ", err);
+    }
+    finally{
+      //console.log("LOG Insert: ", ret_insert_order);
+      id_order = ret_update_order.outBinds.return_id[0];
+    } 
   }
     //console.log(ret_produto.outBinds.return_id[0]);
     //console.log(newCalcado.calcado);
