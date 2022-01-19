@@ -222,6 +222,7 @@ Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_i
     console.log("error: ", err);
     result(err, null);
   }finally{
+    console.log(ret_verify_order);
     if(ret_verify_order.rows.length>0){
       data_verify=ret_verify_order.rows[0][0][0];
       order_value=ret_verify_order.rows[0][0][1];
