@@ -258,7 +258,7 @@ Calcado.itemToOrder = async function (idProduct, idItem, client_id, date, shop_i
       console.log("error: ", err);
     }
     finally{
-      console.log("LOG update: ", ret_insert_order);
+      console.log("LOG update: ", ret_update_order);
       //id_order = ret_update_order.outBinds.return_id[0];
     } 
   }
