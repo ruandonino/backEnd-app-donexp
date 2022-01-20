@@ -34,8 +34,9 @@ var Calcado = function(calcado){
   this.gender  = calcado.gender;
   this.id_shop  = calcado.id_shop;
   this.prod = calcado.produto
+  this.type = calcado.type
   //this.id_produto = calcado.id_produto;
-  this.produto = {1:this.name, 2:this.price,3:this.brand,4:this.id_shop,return_id:{
+  this.produto = {1:this.name, 2:this.price,3:this.brand,4:this.id_shop,5:type,return_id:{
     dir: oracledb.BIND_OUT,
     type: oracledb.NUMBER
   }};
@@ -64,7 +65,7 @@ Calcado.create = async function (newCalcado,result) {
     if(data_verify === undefined){
       console.log("Insert Product");
       try{
-        var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP) VALUES (:1,:2,:3,:4) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
+        var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP,TYPE) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
       }catch{
         console.log("error: ", err);
       }
