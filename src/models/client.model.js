@@ -77,6 +77,20 @@ Client.findById = async function (id, result) {
   }
 };
 
+Client.findById = async function (id, result) {
+  var dbConn = await checkConnection();
+  try{
+    var ret = await dbConn.execute("SELECT * FROM CLIENT WHERE id = :id ", [id]);
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    //console.log(ret);
+    result(null, ret.rows[0]);
+  }
+};
+
 Client.findByIdShop = async function (id, result) {
   var dbConn = await checkConnection();
   try{
