@@ -15,7 +15,7 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantcli
     sh -c "echo instantclient_21_5 > \
       /etc/ld.so.conf.d/oracle-instantclient.conf" && \
     ldconfig && \
-    export TNS_ADMIN=instantclient_21_4/network/admin 
+    export TNS_ADMIN=instantclient_21_5/network/admin 
 
 RUN npm install
 
