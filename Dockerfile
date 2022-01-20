@@ -12,7 +12,7 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantcli
     unzip instantclient-basic-linuxx64.zip && \
     rm -f instantclient-basic-linuxx64.zip && \
     cp Wallet_donexp/* instantclient*/network/admin && \
-    sh -c "echo instantclient_21_4 > \
+    sh -c "echo instantclient_21_5 > \
       /etc/ld.so.conf.d/oracle-instantclient.conf" && \
     ldconfig && \
     export TNS_ADMIN=instantclient_21_4/network/admin 
