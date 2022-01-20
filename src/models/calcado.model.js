@@ -36,7 +36,7 @@ var Calcado = function(calcado){
   this.prod = calcado.produto
   this.type = calcado.type
   //this.id_produto = calcado.id_produto;
-  this.produto = {1:this.name, 2:this.price,3:this.brand,4:this.id_shop,5:type,return_id:{
+  this.produto = {1:this.name, 2:this.price,3:this.brand,4:this.id_shop,5:this.type,return_id:{
     dir: oracledb.BIND_OUT,
     type: oracledb.NUMBER
   }};
