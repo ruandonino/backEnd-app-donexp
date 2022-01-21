@@ -66,21 +66,21 @@ Client.delete = async function(id, result){
 Client.infoById = async function (id, result) {
   var dbConn = await checkConnection();
   try{
-    var ret = await dbConn.execute("SELECT * FROM CLIENT WHERE id = :id ", [id]);
+    var ret = await dbConn.execute("SELECT * FROM ORDER_ WHERE client_id = :id ", [id]);
   }
   catch(err) {
     console.log("error: ", err);
     result(err, null);
   }finally{
     //console.log(ret);
-    result(null, ret.rows[0]);
+    result(null, ret.rows);
   }
 };
 
 Client.findById = async function (id, result) {
   var dbConn = await checkConnection();
   try{
-    var ret_orders = await dbConn.execute("SELECT * FROM ORDER_ WHERE client_id = :id ", [id]);
+    var ret = await dbConn.execute("SELECT * FROM CLIENT WHERE id = :id", [id]);
   }
   catch(err) {
     console.log("error: ", err);
