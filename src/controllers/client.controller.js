@@ -47,6 +47,14 @@ exports.findById = function(req, res) {
   });
 };
 
+exports.infoById = function(req, res) {
+  Client.infoById(req.params.id, function(err, client) {
+  if (err)
+  res.send(err);
+  res.json(client);
+  });
+};
+
 exports.findByIdShop = function(req, res) {
   Client.findByIdShop(req.params.id, function(err, client) {
   if (err)
