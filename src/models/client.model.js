@@ -65,6 +65,8 @@ Client.delete = async function(id, result){
 
 Client.infoById = async function (id, result) {
   var dbConn = await checkConnection();
+  var totalValue =0;
+  var ticketMedio =0;
   try{
     var ret = await dbConn.execute("SELECT * FROM ORDER_ WHERE client_id = :id ", [id]);
   }
@@ -73,7 +75,16 @@ Client.infoById = async function (id, result) {
     result(err, null);
   }finally{
     //console.log(ret);
-    result(null, ret.rows);
+    if(ret.rows.length >0){
+      console.log("maior que 0");
+      for (let item in ret.rows[0]) {
+        totalValue = totalValue + item[1];
+      }
+      ticketMedio = totalValue/ret.rows[0].length;
+      console.log("ticket medio");
+      console.log(ticketMedio);
+    }
+    result(null, ticketMedio);
   }
 };
 
