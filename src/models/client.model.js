@@ -138,6 +138,7 @@ Client.infoById = async function (id, result) {
     nota = ret_client.rows[0][2];
     whats_app = ret_client.rows[0][3];
 
+    vector_info.push(ticketMedio);
     vector_info.push(nota);
     vector_info.push(media_products);
     vector_info.push(last_order);
