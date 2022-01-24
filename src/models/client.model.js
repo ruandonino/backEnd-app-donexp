@@ -85,7 +85,36 @@ Client.infoById = async function (id, result) {
       //console.log("ticket medio");
       //console.log(ticketMedio);
     }
-    result(null, ticketMedio);
+    //result(null, ticketMedio);
+  }
+  try{
+    var ret_media_prods = await dbConn.execute("SELECT * FROM ORDER_ INNER JOIN ITEM_ORDER ON ORDER_.ID=ITEM_ORDER.ID_ORDER WHERE client_id = :id ", [id]);
+  }catch(err){
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    let dict_order_quant = new Object();
+    if(ret_media_prods.rows.length >0){
+      console.log("busca quant");
+      /*
+      for (let i in ret_media_prods.rows) {
+        if(!(ret_media_prods.rows[i][0] in dict_order_quant)){
+          dict_order_quant[ret_media_prods.rows[i][0]] =0
+          for (let j in ret_media_prods.rows) {
+            console.log(ret.rows[i]);
+            if(ret_media_prods.rows[i][0] == ret_media_prods.rows[j][0]){
+              dict_order_quant[ret_media_prods.rows[i][0]] = dict_order_quant[ret_media_prods.rows[i][0]] + ret_media_prods[j][4];
+            }
+          }
+        }
+        
+      }
+      */
+      ticketMedio = totalValue/ret.rows.length;
+      //console.log("ticket medio");
+      //console.log(ticketMedio);
+    }
+    result(null, ret_media_prods.rows); 
   }
 };
 
