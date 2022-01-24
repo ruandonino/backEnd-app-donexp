@@ -96,21 +96,21 @@ Client.infoById = async function (id, result) {
     let dict_order_quant = new Object();
     if(ret_media_prods.rows.length >0){
       console.log("busca quant");
-      /*
+      
       for (let i in ret_media_prods.rows) {
         if(!(ret_media_prods.rows[i][0] in dict_order_quant)){
-          dict_order_quant[ret_media_prods.rows[i][0]] =0
+          dict_order_quant[ret_media_prods.rows[i][0]] =0;
           for (let j in ret_media_prods.rows) {
-            console.log(ret.rows[i]);
+            console.log(ret_media_prods.rows[i]);
             if(ret_media_prods.rows[i][0] == ret_media_prods.rows[j][0]){
-              dict_order_quant[ret_media_prods.rows[i][0]] = dict_order_quant[ret_media_prods.rows[i][0]] + ret_media_prods[j][4];
+              dict_order_quant[ret_media_prods.rows[i][0]] = dict_order_quant[ret_media_prods.rows[i][0]] + ret_media_prods[j][8];
             }
           }
-        }
-        
+        }    
       }
-      */
-      ticketMedio = totalValue/ret.rows.length;
+      console.log(dict_order_quant);
+      
+      //ticketMedio = totalValue/ret.rows.length;
       //console.log("ticket medio");
       //console.log(ticketMedio);
     }
