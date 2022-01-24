@@ -93,7 +93,7 @@ Client.infoById = async function (id, result) {
     console.log("error: ", err);
     result(err, null);
   }finally{
-    let dict_order_quant = new Object();
+    var dict_order_quant = new Object();
     if(ret_media_prods.rows.length >0){
       console.log("busca quant");
       
@@ -103,7 +103,7 @@ Client.infoById = async function (id, result) {
           for (let j in ret_media_prods.rows) {
             console.log(ret_media_prods.rows[i]);
             if(ret_media_prods.rows[i][0] == ret_media_prods.rows[j][0]){
-              dict_order_quant[ret_media_prods.rows[i][0]] = dict_order_quant[ret_media_prods.rows[i][0]] + ret_media_prods[j][8];
+              dict_order_quant[ret_media_prods.rows[i][0]] = dict_order_quant[ret_media_prods.rows[i][0]] + ret_media_prods.rows[j][8];
             }
           }
         }    
