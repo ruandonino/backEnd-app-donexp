@@ -78,8 +78,10 @@ Client.infoById = async function (id, result) {
     if(ret.rows.length >0){
       console.log("maior que 0");
       for (let item in ret.rows[0]) {
+        console.log(item[1]);
         totalValue = totalValue + item[1];
       }
+      console.log(ret.rows[0].length);
       ticketMedio = totalValue/ret.rows[0].length;
       console.log("ticket medio");
       console.log(ticketMedio);
