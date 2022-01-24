@@ -67,6 +67,14 @@ Client.infoById = async function (id, result) {
   var dbConn = await checkConnection();
   var totalValue =0;
   var ticketMedio =0;
+  var dict_order_quant = new Object();
+  var quant_product = 0;
+  var quant_order = 0;
+  var media_products = 0;
+  var nota = 0;
+  var last_order;
+  var vector_info =[];
+  var whats_app;
   try{
     var ret = await dbConn.execute("SELECT * FROM ORDER_ WHERE client_id = :id ", [id]);
   }
@@ -93,28 +101,50 @@ Client.infoById = async function (id, result) {
     console.log("error: ", err);
     result(err, null);
   }finally{
-    var dict_order_quant = new Object();
+    var big_id =0;
     if(ret_media_prods.rows.length >0){
       console.log("busca quant");
       
       for (let i in ret_media_prods.rows) {
+        if(big_id < ret_media_prods.rows[i][0]){
+          big_id = ret_media_prods.rows[i][0];
+          last_order = ret_media_prods.rows[i][2];
+        }
         if(!(ret_media_prods.rows[i][0] in dict_order_quant)){
           dict_order_quant[ret_media_prods.rows[i][0]] =0;
+          quant_order = quant_order +1;
           for (let j in ret_media_prods.rows) {
-            console.log(ret_media_prods.rows[i]);
+            //console.log(ret_media_prods.rows[i]);
             if(ret_media_prods.rows[i][0] == ret_media_prods.rows[j][0]){
               dict_order_quant[ret_media_prods.rows[i][0]] = dict_order_quant[ret_media_prods.rows[i][0]] + ret_media_prods.rows[j][8];
+              quant_product = quant_product + ret_media_prods.rows[j][8];
             }
           }
         }    
       }
-      console.log(dict_order_quant);
-      
-      //ticketMedio = totalValue/ret.rows.length;
-      //console.log("ticket medio");
-      //console.log(ticketMedio);
+      media_products = quant_product / quant_order;
     }
     result(null, ret_media_prods.rows); 
+  }
+
+  try{
+    var ret_client = await dbConn.execute("SELECT * FROM CLIENT WHERE id = :id", [id]);
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    //console.log(ret);
+    nota = ret_client.rows[0][2];
+    whats_app = ret_client.rows[0][3];
+
+    vector_info.push(nota);
+    vector_info.push(media_products);
+    vector_info.push(last_order);
+    vector_info.push(nota);
+    vector_info.push(whats_app);
+
+    result(null, vector_info);
   }
 };
 
