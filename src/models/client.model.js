@@ -81,7 +81,7 @@ Client.infoById = async function (id, result) {
         console.log(ret.rows[i]);
         totalValue = totalValue + ret.rows[i][1];
       }
-      console.log(ret.rows[0].length);
+      console.log(ret.rows.length);
       ticketMedio = totalValue/ret.rows[0].length;
       console.log("ticket medio");
       console.log(ticketMedio);
