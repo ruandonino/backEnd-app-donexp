@@ -77,7 +77,7 @@ Client.infoById = async function (id, result) {
     //console.log(ret);
     if(ret.rows.length >0){
       console.log("maior que 0");
-      for (let item in ret.rows) {
+      for (let item in ret) {
         console.log(item);
         totalValue = totalValue + item[1];
       }
