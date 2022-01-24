@@ -124,7 +124,7 @@ Client.infoById = async function (id, result) {
       }
       media_products = quant_product / quant_order;
     }
-    result(null, ret_media_prods.rows); 
+    //result(null, ret_media_prods.rows); 
   }
 
   try{
