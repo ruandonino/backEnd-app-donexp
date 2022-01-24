@@ -76,15 +76,14 @@ Client.infoById = async function (id, result) {
   }finally{
     //console.log(ret);
     if(ret.rows.length >0){
-      console.log("maior que 0");
+      //console.log("maior que 0");
       for (let i in ret.rows) {
-        console.log(ret.rows[i]);
+        //console.log(ret.rows[i]);
         totalValue = totalValue + ret.rows[i][1];
       }
-      console.log(ret.rows.length);
-      ticketMedio = totalValue/ret.rows[0].length;
-      console.log("ticket medio");
-      console.log(ticketMedio);
+      ticketMedio = totalValue/ret.rows.length;
+      //console.log("ticket medio");
+      //console.log(ticketMedio);
     }
     result(null, ticketMedio);
   }
