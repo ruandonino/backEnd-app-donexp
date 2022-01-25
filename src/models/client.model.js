@@ -1,6 +1,6 @@
 'use strict';
 const oracledb = require('oracledb');
-const connecOracle = require("../../config/configConnect");
+//const connecOracle = require("../../config/configConnect");
 
 //oracledb.initOracleClient({ libDir: 'C:\\Users\\Donruan\\Documents\\Projeto Smarex\\back-end-AI\\instantclient-basic-windows.x64-21.3.0.0.0\\instantclient_21_3' });
 // hr schema password
@@ -69,8 +69,8 @@ Client.delete = async function(id, result){
 };
 
 Client.infoById = async function (id, result) {
-  //var dbConn = await checkConnection();
-  var dbConn = connecOracle.checkConnection;
+  var dbConn = await checkConnection();
+  //var dbConn = connecOracle.checkConnection;
   var totalValue =0;
   var ticketMedio =0;
   var dict_order_quant = new Object();
