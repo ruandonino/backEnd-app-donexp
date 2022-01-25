@@ -6,7 +6,7 @@ const oracledb = require('oracledb');
 var password = "231295Don**banco"
 var connection_global;
 // checkConnection asycn function
-async function checkConnection() {
+var connection_global = async function checkConnection() {
   try {
     var connection = await oracledb.getConnection({ user: "ADMIN", password: password, connectionString: "donexp_high" });
     console.log('connected to database');
@@ -24,7 +24,7 @@ async function checkConnection() {
   }
 }
 
-connection_global = await checkConnection();
+//connection_global = await checkConnection();
 
 //Employee object create
 var Client = function(client){
