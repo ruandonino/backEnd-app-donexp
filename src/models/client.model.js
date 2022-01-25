@@ -4,6 +4,7 @@ const oracledb = require('oracledb');
 //oracledb.initOracleClient({ libDir: 'C:\\Users\\Donruan\\Documents\\Projeto Smarex\\back-end-AI\\instantclient-basic-windows.x64-21.3.0.0.0\\instantclient_21_3' });
 // hr schema password
 var password = "231295Don**banco"
+var connection_global;
 // checkConnection asycn function
 async function checkConnection() {
   try {
@@ -14,6 +15,7 @@ async function checkConnection() {
   } finally {
     if (connection) {
       try {
+        //connection_global = connection;
         return connection;
       } catch (err) {
         console.error(err.message);
@@ -21,6 +23,8 @@ async function checkConnection() {
     }
   }
 }
+
+connection_global = await checkConnection();
 
 //Employee object create
 var Client = function(client){
@@ -64,7 +68,8 @@ Client.delete = async function(id, result){
 };
 
 Client.infoById = async function (id, result) {
-  var dbConn = await checkConnection();
+  //var dbConn = await checkConnection();
+  var dbConn = connection_global;
   var totalValue =0;
   var ticketMedio =0;
   var dict_order_quant = new Object();
