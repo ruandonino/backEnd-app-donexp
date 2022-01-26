@@ -19,5 +19,7 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/instantcli
 
 RUN npm install
 
+RUN ls
+
 
 CMD npm start
