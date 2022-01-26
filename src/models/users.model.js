@@ -2,9 +2,9 @@
 const oracledb = require('oracledb');
 const Shop = require('./shop.model');
 
-//oracledb.initOracleClient({ libDir: '..\\..\\instantclient_21_4' });
+oracledb.initOracleClient({ libDir: '..\\..\\instantclient_21_4' });
 // hr schema password
-var password = "231295Don**banco"
+var password = "231295Don**banco";
 // checkConnection asycn function
 async function checkConnection() {
   try {
