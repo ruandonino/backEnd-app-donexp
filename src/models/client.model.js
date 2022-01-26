@@ -1,7 +1,7 @@
 'use strict';
 const oracledb = require('oracledb');
 //const connecOracle = require("../../config/configConnect");
-oracledb.initOracleClient({ libDir: 'instantclient_21_5' });
+
 
 //oracledb.initOracleClient({ libDir: 'C:\\Users\\Donruan\\Documents\\Projeto Smarex\\back-end-AI\\instantclient-basic-windows.x64-21.3.0.0.0\\instantclient_21_3' });
 // hr schema password
