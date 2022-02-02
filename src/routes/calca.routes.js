@@ -13,6 +13,8 @@ router.get('/:id', calcaController.findById);
 router.get('/shop/:id', calcaController.findByIdShop);
 // Update a employee with id
 router.put('/:id', calcaController.update);
+// Update a employee with id
+router.post('/findproducts', calcaController.findProducts);
 // Delete a employee with id
 router.delete('/:id', calcaController.delete);
 module.exports = router

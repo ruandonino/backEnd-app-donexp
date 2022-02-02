@@ -122,6 +122,20 @@ Camiseta.create = async function (newcamiseta, result) {
 };
 */
 
+Camiseta.findProducts = async function (idProduct, result) {
+  var dbConn = await checkConnection();
+  console.log(idProduct);
+  try{
+    var ret = await dbConn.execute("SELECT * FROM CAMISETA WHERE CAMISETA.ID_PRODUTO = :1", {1:idProduct});
+  }
+  catch(err) {
+    console.log("error: ", err);
+    result(err, null);
+  }finally{
+    result(null, ret.rows);
+  }
+};
+
 Camiseta.findByProduct = async function (idProduct,client_id,date,shop_id, tam, color,quant, result) {
   var dbConn = await checkConnection();
   console.log(idProduct);

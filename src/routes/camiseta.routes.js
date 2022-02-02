@@ -13,6 +13,8 @@ router.get('/:id', camisetaController.findById);
 router.get('/shop/:id', camisetaController.findByIdShop);
 // Update a employee with id
 router.put('/:id', camisetaController.update);
+// Update a employee with id
+router.post('/findproducts', camisetaController.findProducts);
 // Delete a employee with id
 router.delete('/:id', camisetaController.delete);
 module.exports = router
