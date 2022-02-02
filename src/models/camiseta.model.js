@@ -225,7 +225,7 @@ Camiseta.findById = async function (id, result) {
 Camiseta.findByIdShop = async function (id, result) {
   var dbConn = await checkConnection();
   try{
-    var ret = await dbConn.execute("SELECT CAMISETA.*,PRODUTO.* FROM camiseta INNER JOIN PRODUTO ON camiseta.ID_PRODUTO = PRODUTO.ID JOIN SHOP ON PRODUTO.ID_SHOP = SHOP.SHOP_ID WHERE SHOP.SHOP_ID = :id", [id]);
+    var ret = await dbConn.execute("SELECT PRODUTO.*,CAMISETA.* FROM camiseta INNER JOIN PRODUTO ON camiseta.ID_PRODUTO = PRODUTO.ID JOIN SHOP ON PRODUTO.ID_SHOP = SHOP.SHOP_ID WHERE SHOP.SHOP_ID = :id", [id]);
     console.log(ret);
   }
   catch(err) {
