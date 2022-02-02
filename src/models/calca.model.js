@@ -127,7 +127,7 @@ Calca.findProducts = async function (idProduct, result) {
   var dbConn = await checkConnection();
   console.log(idProduct);
   try{
-    var ret = await dbConn.execute("SELECT color,size FROM CALCA WHERE CALCA.ID_PRODUTO = :1", {1:idProduct});
+    var ret = await dbConn.execute("SELECT CALCA.color,CALCA.size FROM CALCA WHERE CALCA.ID_PRODUTO = :1", {1:idProduct});
   }
   catch(err) {
     console.log("error: ", err);

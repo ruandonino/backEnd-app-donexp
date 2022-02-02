@@ -287,7 +287,7 @@ Calcado.findProducts = async function (idProduct, result) {
   var dbConn = await checkConnection();
   console.log(idProduct);
   try{
-    var ret = await dbConn.execute("SELECT color,size_cal FROM CALCADO WHERE CALCADO.ID_PRODUTO = :1", {1:idProduct});
+    var ret = await dbConn.execute("SELECT CALCADO.color,CALCADO.size_cal FROM CALCADO WHERE CALCADO.ID_PRODUTO = :1", {1:idProduct});
   }
   catch(err) {
     console.log("error: ", err);
