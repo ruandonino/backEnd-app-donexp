@@ -97,7 +97,7 @@ Client.infoById = async function (id, result) {
       }
       ticketMedio = totalValue/ret.rows.length;
       console.log("ticket medio");
-      console.log(ret.rows[i]);
+      console.log(ret.rows);
       console.log(ret.rows.length);
     }
     //result(null, ticketMedio);
