@@ -93,12 +93,12 @@ Client.infoById = async function (id, result) {
       //console.log("maior que 0");
       for (let i in ret.rows) {
         //console.log(ret.rows[i]);
-        totalValue = totalValue + ret.rows[i][1];
+        totalValue = totalValue + ret.rows[i][3];
       }
       ticketMedio = totalValue/ret.rows.length;
-      console.log("ticket medio");
-      console.log(ret.rows);
-      console.log(ret.rows.length);
+      //console.log("ticket medio");
+      //console.log(ret.rows);
+      //console.log(ret.rows.length);
     }
     //result(null, ticketMedio);
   }
