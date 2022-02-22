@@ -88,33 +88,46 @@ User.addUserAndShopById = async function (id,newUser, result) {
     //result(null, ret.rows[0]);
     if(!ret.rows[0]){
       try{
-        var ret_shop_id = await dbConn.execute("INSERT INTO SHOP (NAME,CITY,LOCAL_NAME) VALUES (:1,:2,:3) returning SHOP_ID into :return_id",{1:newUser.name,2:'',3:'',return_id:{
-          dir: oracledb.BIND_OUT,
-          type: oracledb.NUMBER
-        }},{ autoCommit: true });
-      }
-      catch(err) {
+        var ret_habilited = await dbConn.execute("SELECT * FROM HABILITED WHERE email = :1 ", {1:newUser.email});
+      }catch(err){
         console.log("error: ", err);
         result(err, null);
-      }finally{
-        console.log(ret_shop_id);
-        var shop_id = ret_shop_id.outBinds.return_id[0];
-        newUser.vetor[3] = shop_id;
-        newUser.vetor[5] = id;
-        newUser.vetor['return_id'] = {
-          dir: oracledb.BIND_OUT,
-          type: oracledb.NUMBER
-        }
+      }
+      if(!ret_habilited.rows[0]){
         try{
-          var ret_user = await dbConn.execute("INSERT INTO USERS (NAME,EMAIL,ID_LOJA,POSITION,ID) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", newUser.vetor,{ autoCommit: true });
-        }catch(err){
+          var ret_shop_id = await dbConn.execute("INSERT INTO SHOP (NAME,CITY,LOCAL_NAME) VALUES (:1,:2,:3) returning SHOP_ID into :return_id",{1:newUser.name,2:'',3:'',return_id:{
+            dir: oracledb.BIND_OUT,
+            type: oracledb.NUMBER
+          }},{ autoCommit: true });
+        }
+        catch(err) {
           console.log("error: ", err);
           result(err, null);
         }finally{
-          var user_id = ret_user.outBinds.return_id[0];
-          var retfinal = {'shop_id':shop_id,'user_id':user_id};
-          result(null, retfinal);
+          console.log(ret_shop_id);
+          var shop_id = ret_shop_id.outBinds.return_id[0];
+          newUser.vetor[3] = shop_id;
+          newUser.vetor[5] = id;
+          newUser.vetor['return_id'] = {
+            dir: oracledb.BIND_OUT,
+            type: oracledb.NUMBER
+          }
+          try{
+            var ret_user = await dbConn.execute("INSERT INTO USERS (NAME,EMAIL,ID_LOJA,POSITION,ID) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", newUser.vetor,{ autoCommit: true });
+          }catch(err){
+            console.log("error: ", err);
+            result(err, null);
+          }finally{
+            var user_id = ret_user.outBinds.return_id[0];
+            var retfinal = {'shop_id':shop_id,'user_id':user_id};
+            result(null, retfinal);
+          }
         }
+      }
+      else{
+        
+        var retfinal = null;
+        result(null, retfinal);
       }
     }
     else{
