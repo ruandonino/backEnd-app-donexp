@@ -126,7 +126,7 @@ User.addUserAndShopById = async function (id,newUser, result) {
       }
       else{
         
-        var retfinal = null;
+        var retfinal = {'shop_id':null,'user_id':null};
         result(null, retfinal);
       }
     }
