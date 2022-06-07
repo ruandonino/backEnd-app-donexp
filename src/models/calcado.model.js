@@ -59,7 +59,7 @@ Calcado.create = async function (newCalcado,result) {
     if(data_verify === undefined){
       console.log("Insert Product");
       try{
-        var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP,OTHERS) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
+        var ret_produto = await dbConn.execute("INSERT INTO PRODUTO (NAME,PRICE,BRAND,ID_SHOP,INFO) VALUES (:1,:2,:3,:4,:5) returning ID into :return_id", newCalcado.produto,{ autoCommit: true });
       }catch{
         console.log("error: ", err);
       }
@@ -321,7 +321,7 @@ Calcado.update = async function(id, calcado, result){
     //var ret_calcado = await dbConn.execute("UPDATE CALCADO SET DATE_MODEL=:1,SIZE_CAL=:2,CATEGORIE=:3,MATERIAL=:4,COLOR=:5,GENDER=:6 WHERE id = :7", {1:calcado.date_model, 2:calcado.size,3:calcado.categorie,4:calcado.material,5:calcado.color,6:calcado.gender,7:id},{ autoCommit: true });
     //var id_produto = await dbConn.execute("SELECT ID_PRODUTO FROM CALCADO WHERE ID = :id",[id]);
     //console.log(id_produto.rows[0][0]);
-    var ret_produto = await dbConn.execute("UPDATE PRODUTO SET NAME=:1,PRICE=:2,BRAND=:3,OTHERS=:4 WHERE id = :5", {1:calcado.name, 2:calcado.price,3:calcado.brand,4:calcado.others,5:id},{ autoCommit: true });
+    var ret_produto = await dbConn.execute("UPDATE PRODUTO SET NAME=:1,PRICE=:2,BRAND=:3,INFO=:4 WHERE id = :5", {1:calcado.name, 2:calcado.price,3:calcado.brand,4:calcado.others,5:id},{ autoCommit: true });
   }
   catch(err) {
     console.log("error: ", err);
