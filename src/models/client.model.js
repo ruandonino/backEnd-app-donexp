@@ -81,6 +81,10 @@ Client.infoById = async function (id, result) {
   var last_order;
   var vector_info =[];
   var whats_app;
+  var name;
+  var email;
+  var birthday;
+
   try{
     var ret = await dbConn.execute("SELECT * FROM ORDER_ WHERE client_id = :id ", [id]);
   }
@@ -132,6 +136,7 @@ Client.infoById = async function (id, result) {
       media_products = quant_product / quant_order;
     }
     //result(null, ret_media_prods.rows); 
+    console.log(ret_media_prods.rows);
   }
 
   try{
@@ -144,12 +149,18 @@ Client.infoById = async function (id, result) {
     //console.log(ret);
     nota = ret_client.rows[0][2];
     whats_app = ret_client.rows[0][3];
+    name = ret_client.rows[0][1];
+    email = ret_client.rows[0][7];
+    birthday = ret_client.rows[0][4];
 
     vector_info.push(ticketMedio);
     vector_info.push(nota);
     vector_info.push(Math.round(media_products));
     vector_info.push(last_order);
+    vector_info.push(name);
+    vector_info.push(email);
     vector_info.push(whats_app);
+    vector_info.push(birthday);
 
     result(null, vector_info);
   }
