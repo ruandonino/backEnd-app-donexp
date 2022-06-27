@@ -80,6 +80,7 @@ Client.infoById = async function (id, result) {
   var nota = 0;
   var last_order;
   var vector_info =[];
+  var lastOrder_info =[];
   var whats_app;
   var name;
   var email;
@@ -134,9 +135,14 @@ Client.infoById = async function (id, result) {
         }    
       }
       media_products = quant_product / quant_order;
+      for (let i in ret_media_prods.rows) {
+        if(ret_media_prods.rows[i][0] == big_id){
+          lastOrder_info.push(ret_media_prods.rows[i])
+        }
+      } 
     }
     //result(null, ret_media_prods.rows); 
-    console.log(ret_media_prods.rows);
+    //console.log(ret_media_prods.rows);
   }
 
   try{
@@ -161,6 +167,7 @@ Client.infoById = async function (id, result) {
     vector_info.push(email);
     vector_info.push(whats_app);
     vector_info.push(birthday);
+    vector_info.push(lastOrder_info);
 
     result(null, vector_info);
   }
