@@ -108,7 +108,7 @@ Client.infoById = async function (id, result) {
     //result(null, ticketMedio);
   }
   try{
-    var ret_media_prods = await dbConn.execute("SELECT * FROM ORDER_ INNER JOIN ITEM_ORDER ON ORDER_.ID=ITEM_ORDER.ID_ORDER WHERE client_id = :id ", [id]);
+    var ret_media_prods = await dbConn.execute("SELECT * FROM ORDER_ INNER JOIN ITEM_ORDER ON ORDER_.ID=ITEM_ORDER.ID_ORDER INNER JOIN PRODUTO ON PRODUTO.ID=ITEM_ORDER.ID_PRODUTO WHERE client_id = :id ", [id]);
   }catch(err){
     console.log("error: ", err);
     result(err, null);
