@@ -122,7 +122,7 @@ Client.infoById = async function (id, result) {
         if(big_id < ret_media_prods.rows[i][0]){
           big_id = ret_media_prods.rows[i][0];
           last_order = ret_media_prods.rows[i][2];
-          lastOrder_totalValue = ret_media_prods[i][3];
+          lastOrder_totalValue = ret_media_prods.rows[i][3];
         }
         if(!(ret_media_prods.rows[i][0] in dict_order_quant)){
           dict_order_quant[ret_media_prods.rows[i][0]] =0;
