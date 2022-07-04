@@ -80,6 +80,7 @@ Client.infoById = async function (id, result) {
   var nota = 0;
   var last_order;
   var vector_info =[];
+  var lastOrder_totalValue =0;
   var lastOrder_info =[];
   var whats_app;
   var name;
@@ -121,6 +122,7 @@ Client.infoById = async function (id, result) {
         if(big_id < ret_media_prods.rows[i][0]){
           big_id = ret_media_prods.rows[i][0];
           last_order = ret_media_prods.rows[i][2];
+          lastOrder_totalValue = ret_media_prods[i][3];
         }
         if(!(ret_media_prods.rows[i][0] in dict_order_quant)){
           dict_order_quant[ret_media_prods.rows[i][0]] =0;
@@ -163,6 +165,7 @@ Client.infoById = async function (id, result) {
     vector_info.push(nota);
     vector_info.push(Math.round(media_products));
     vector_info.push(last_order);
+    vector_info.push(lastOrder_totalValue);
     vector_info.push(name);
     vector_info.push(email);
     vector_info.push(whats_app);
